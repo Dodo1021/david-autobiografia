@@ -114,7 +114,7 @@
 
   /* ===== CHAPTER ===== */
   .chapter {
-    padding: 10vh 5vw 5vh;
+    padding: 8vh 3vw 4vh;
     position: relative;
   }
 
@@ -153,29 +153,32 @@
     margin-top: 0.5rem;
   }
 
-  /* ===== COLLAGE — Real scattered photo style ===== */
-  .collage {
-    position: relative;
+  /* ===== COLLAGE — Scattered photos on a table ===== */
+  .collage-wrap {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
-    /* Height set per collage via inline style */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+    padding: 20px;
+    position: relative;
   }
 
   .photo {
-    position: absolute;
     background: var(--paper);
-    padding: 8px 8px 28px 8px;
+    padding: 6px 6px 22px 6px;
     box-shadow: 
       0 4px 15px rgba(0,0,0,0.4),
-      0 1px 3px rgba(0,0,0,0.3),
-      inset 0 0 30px rgba(0,0,0,0.02);
+      0 1px 3px rgba(0,0,0,0.3);
     cursor: pointer;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.4s ease,
-                z-index 0s;
+                box-shadow 0.4s ease;
     opacity: 0;
-    transform-origin: center center;
+    display: inline-block;
+    margin: -8px; /* slight overlap at edges only */
+    flex-shrink: 0;
   }
 
   .photo.visible {
@@ -187,51 +190,57 @@
     box-shadow: 
       0 15px 50px rgba(0,0,0,0.6),
       0 5px 15px rgba(0,0,0,0.4);
-    transform: scale(1.08) rotate(0deg) !important;
+    transform: scale(1.1) rotate(0deg) !important;
   }
 
   .photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     display: block;
+    object-fit: cover;
   }
 
-  /* Tape effect on some photos */
+  /* Size classes */
+  .photo.sm img { width: 150px; height: 180px; }
+  .photo.md img { width: 180px; height: 220px; }
+  .photo.lg img { width: 220px; height: 260px; }
+  .photo.wide img { width: 280px; height: 190px; }
+
+  /* Tape effect */
   .photo.taped::before {
     content: '';
     position: absolute;
-    top: -10px;
+    top: -8px;
     left: 50%;
     transform: translateX(-50%) rotate(-2deg);
-    width: 60px;
-    height: 22px;
+    width: 50px;
+    height: 18px;
     background: rgba(255,255,200,0.5);
     border: 1px solid rgba(200,180,120,0.3);
     z-index: 2;
   }
 
-  /* Pin effect on some photos */
+  /* Pin effect */
   .photo.pinned::after {
     content: '';
     position: absolute;
-    top: -6px;
+    top: -5px;
     left: 50%;
     transform: translateX(-50%);
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     background: radial-gradient(circle at 40% 40%, #e74c3c, #c0392b);
     border-radius: 50%;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     z-index: 2;
   }
 
+  .photo { position: relative; }
+
   /* ===== DIVIDER ===== */
   .divider {
     width: 60px;
     height: 1px;
     background: var(--accent);
-    margin: 0 auto;
+    margin: 2rem auto;
     opacity: 0;
     transition: opacity 0.8s;
   }
@@ -239,7 +248,7 @@
 
   /* ===== CLOSING ===== */
   .closing {
-    height: 100vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -305,10 +314,22 @@
     to { transform: scale(1); opacity: 1; }
   }
 
-  /* ===== RESPONSIVE ===== */
+  /* ===== MOBILE ===== */
   @media (max-width: 768px) {
-    .collage { transform: scale(0.55); transform-origin: top center; }
-    .photo { padding: 5px 5px 18px 5px; }
+    .photo.sm img { width: 120px; height: 150px; }
+    .photo.md img { width: 140px; height: 175px; }
+    .photo.lg img { width: 160px; height: 200px; }
+    .photo.wide img { width: 200px; height: 140px; }
+    .photo { margin: -4px; padding: 4px 4px 16px 4px; }
+    .collage-wrap { padding: 10px; }
+  }
+
+  @media (max-width: 480px) {
+    .photo.sm img { width: 100px; height: 125px; }
+    .photo.md img { width: 115px; height: 145px; }
+    .photo.lg img { width: 135px; height: 170px; }
+    .photo.wide img { width: 170px; height: 115px; }
+    .photo { margin: -3px; padding: 3px 3px 12px 3px; }
   }
 </style>
 </head>
@@ -330,17 +351,17 @@
     <h2 class="chapter-title">CDMX</h2>
     <p class="chapter-years">2005 – 2010</p>
   </div>
-  <div class="collage" style="height:520px">
-    <div class="photo taped" style="width:220px;height:280px;top:20px;left:5%;transform:rotate(-6deg);z-index:2">
+  <div class="collage-wrap">
+    <div class="photo md taped" style="transform:rotate(-5deg);z-index:2">
       <img src="images/cdmx_1.jpg" alt="">
     </div>
-    <div class="photo pinned" style="width:240px;height:260px;top:0;left:28%;transform:rotate(3deg);z-index:3">
+    <div class="photo lg pinned" style="transform:rotate(3deg);z-index:3">
       <img src="images/cdmx_2.jpg" alt="">
     </div>
-    <div class="photo" style="width:230px;height:300px;top:40px;left:52%;transform:rotate(-4deg);z-index:1">
+    <div class="photo md" style="transform:rotate(-3deg);z-index:1">
       <img src="images/cdmx_3.jpg" alt="">
     </div>
-    <div class="photo taped" style="width:250px;height:290px;top:10px;left:74%;transform:rotate(5deg);z-index:4">
+    <div class="photo md taped" style="transform:rotate(5deg);z-index:4">
       <img src="images/cdmx_4.jpg" alt="">
     </div>
   </div>
@@ -355,26 +376,26 @@
     <h2 class="chapter-title">Guadalajara</h2>
     <p class="chapter-years">2010 – 2013</p>
   </div>
-  <div class="collage" style="height:680px">
-    <div class="photo pinned" style="width:200px;height:250px;top:0;left:2%;transform:rotate(-5deg);z-index:2">
+  <div class="collage-wrap">
+    <div class="photo sm pinned" style="transform:rotate(-4deg);z-index:2">
       <img src="images/guadalajara_1.jpg" alt="">
     </div>
-    <div class="photo taped" style="width:230px;height:260px;top:20px;left:22%;transform:rotate(4deg);z-index:4">
+    <div class="photo md taped" style="transform:rotate(3deg);z-index:4">
       <img src="images/guadalajara_2.jpg" alt="">
     </div>
-    <div class="photo" style="width:220px;height:270px;top:10px;left:46%;transform:rotate(-3deg);z-index:3">
+    <div class="photo md" style="transform:rotate(-2deg);z-index:3">
       <img src="images/guadalajara_3.jpg" alt="">
     </div>
-    <div class="photo pinned" style="width:240px;height:250px;top:30px;left:70%;transform:rotate(6deg);z-index:1">
+    <div class="photo sm pinned" style="transform:rotate(5deg);z-index:1">
       <img src="images/guadalajara_4.jpg" alt="">
     </div>
-    <div class="photo taped" style="width:260px;height:280px;top:310px;left:5%;transform:rotate(3deg);z-index:5">
+    <div class="photo md taped" style="transform:rotate(2deg);z-index:5">
       <img src="images/guadalajara_5.jpg" alt="">
     </div>
-    <div class="photo" style="width:280px;height:260px;top:320px;left:32%;transform:rotate(-5deg);z-index:6">
+    <div class="photo wide" style="transform:rotate(-4deg);z-index:6">
       <img src="images/guadalajara_6.jpg" alt="">
     </div>
-    <div class="photo pinned" style="width:270px;height:270px;top:300px;left:62%;transform:rotate(4deg);z-index:7">
+    <div class="photo wide pinned" style="transform:rotate(3deg);z-index:7">
       <img src="images/guadalajara_7.jpg" alt="">
     </div>
   </div>
@@ -389,45 +410,41 @@
     <h2 class="chapter-title">Fútbol</h2>
     <p class="chapter-years">2013 – 2019 · Atlas → Chivas → América</p>
   </div>
-  <div class="collage" style="height:1000px">
-    <!-- Row 1 -->
-    <div class="photo taped" style="width:230px;height:280px;top:0;left:3%;transform:rotate(-4deg);z-index:2">
+  <div class="collage-wrap">
+    <div class="photo md taped" style="transform:rotate(-4deg);z-index:2">
       <img src="images/futbol_1.jpg" alt="">
     </div>
-    <div class="photo" style="width:220px;height:260px;top:20px;left:26%;transform:rotate(5deg);z-index:3">
+    <div class="photo sm" style="transform:rotate(5deg);z-index:3">
       <img src="images/futbol_2.jpg" alt="">
     </div>
-    <div class="photo pinned" style="width:240px;height:270px;top:10px;left:48%;transform:rotate(-3deg);z-index:1">
+    <div class="photo md pinned" style="transform:rotate(-2deg);z-index:1">
       <img src="images/futbol_3.jpg" alt="">
     </div>
-    <div class="photo taped" style="width:210px;height:290px;top:0;left:73%;transform:rotate(6deg);z-index:4">
+    <div class="photo sm taped" style="transform:rotate(4deg);z-index:4">
       <img src="images/futbol_4.jpg" alt="">
     </div>
-    <!-- Row 2 -->
-    <div class="photo" style="width:220px;height:260px;top:330px;left:5%;transform:rotate(3deg);z-index:5">
+    <div class="photo md" style="transform:rotate(-3deg);z-index:5">
       <img src="images/futbol_5.jpg" alt="">
     </div>
-    <div class="photo pinned" style="width:320px;height:250px;top:340px;left:28%;transform:rotate(-4deg);z-index:7">
+    <div class="photo wide pinned" style="transform:rotate(2deg);z-index:7">
       <img src="images/futbol_6.jpg" alt="">
     </div>
-    <div class="photo taped" style="width:250px;height:260px;top:320px;left:65%;transform:rotate(5deg);z-index:6">
+    <div class="photo md taped" style="transform:rotate(-5deg);z-index:6">
       <img src="images/futbol_7.jpg" alt="">
     </div>
-    <!-- Row 3 -->
-    <div class="photo pinned" style="width:230px;height:260px;top:640px;left:4%;transform:rotate(-5deg);z-index:8">
+    <div class="photo sm pinned" style="transform:rotate(3deg);z-index:8">
       <img src="images/futbol2_1.jpg" alt="">
     </div>
-    <div class="photo" style="width:240px;height:270px;top:660px;left:27%;transform:rotate(3deg);z-index:9">
+    <div class="photo md" style="transform:rotate(-4deg);z-index:9">
       <img src="images/futbol2_2.jpg" alt="">
     </div>
-    <div class="photo taped" style="width:200px;height:280px;top:650px;left:50%;transform:rotate(-6deg);z-index:10">
+    <div class="photo sm taped" style="transform:rotate(6deg);z-index:10">
       <img src="images/futbol2_3.jpg" alt="">
     </div>
-    <div class="photo" style="width:250px;height:260px;top:640px;left:70%;transform:rotate(4deg);z-index:11">
+    <div class="photo md" style="transform:rotate(-3deg);z-index:11">
       <img src="images/futbol2_4.jpg" alt="">
     </div>
-    <!-- Team photo wide -->
-    <div class="photo pinned" style="width:450px;height:280px;top:700px;left:25%;transform:rotate(-1deg);z-index:12">
+    <div class="photo wide pinned" style="transform:rotate(1deg);z-index:12">
       <img src="images/futbol2_5.jpg" alt="">
     </div>
   </div>
@@ -442,26 +459,26 @@
     <h2 class="chapter-title">2019</h2>
     <p class="chapter-years">2019 – 2021</p>
   </div>
-  <div class="collage" style="height:680px">
-    <div class="photo" style="width:220px;height:290px;top:0;left:2%;transform:rotate(4deg);z-index:2">
+  <div class="collage-wrap">
+    <div class="photo md" style="transform:rotate(4deg);z-index:2">
       <img src="images/2019_1.jpg" alt="">
     </div>
-    <div class="photo taped" style="width:240px;height:260px;top:20px;left:24%;transform:rotate(-5deg);z-index:3">
+    <div class="photo md taped" style="transform:rotate(-5deg);z-index:3">
       <img src="images/2019_2.jpg" alt="">
     </div>
-    <div class="photo pinned" style="width:230px;height:270px;top:10px;left:50%;transform:rotate(3deg);z-index:1">
+    <div class="photo sm pinned" style="transform:rotate(3deg);z-index:1">
       <img src="images/2019_3.jpg" alt="">
     </div>
-    <div class="photo" style="width:210px;height:280px;top:30px;left:74%;transform:rotate(-4deg);z-index:4">
+    <div class="photo md" style="transform:rotate(-3deg);z-index:4">
       <img src="images/2019_4.jpg" alt="">
     </div>
-    <div class="photo taped" style="width:200px;height:250px;top:340px;left:8%;transform:rotate(-3deg);z-index:5">
+    <div class="photo sm taped" style="transform:rotate(-4deg);z-index:5">
       <img src="images/2019_5.jpg" alt="">
     </div>
-    <div class="photo pinned" style="width:300px;height:260px;top:350px;left:30%;transform:rotate(4deg);z-index:7">
+    <div class="photo wide pinned" style="transform:rotate(3deg);z-index:7">
       <img src="images/2019_6.jpg" alt="">
     </div>
-    <div class="photo" style="width:250px;height:270px;top:330px;left:64%;transform:rotate(-5deg);z-index:6">
+    <div class="photo md" style="transform:rotate(-5deg);z-index:6">
       <img src="images/2019_7.jpg" alt="">
     </div>
   </div>
@@ -476,17 +493,17 @@
     <h2 class="chapter-title">Hoy</h2>
     <p class="chapter-years">2021 – Presente</p>
   </div>
-  <div class="collage" style="height:450px">
-    <div class="photo pinned" style="width:240px;height:300px;top:10px;left:3%;transform:rotate(-5deg);z-index:2">
+  <div class="collage-wrap">
+    <div class="photo lg pinned" style="transform:rotate(-4deg);z-index:2">
       <img src="images/hoy_1.jpg" alt="">
     </div>
-    <div class="photo taped" style="width:260px;height:280px;top:0;left:27%;transform:rotate(4deg);z-index:3">
+    <div class="photo lg taped" style="transform:rotate(3deg);z-index:3">
       <img src="images/hoy_2.jpg" alt="">
     </div>
-    <div class="photo" style="width:230px;height:290px;top:20px;left:53%;transform:rotate(-3deg);z-index:1">
+    <div class="photo md" style="transform:rotate(-3deg);z-index:1">
       <img src="images/hoy_3.jpg" alt="">
     </div>
-    <div class="photo pinned" style="width:220px;height:270px;top:30px;left:76%;transform:rotate(6deg);z-index:4">
+    <div class="photo md pinned" style="transform:rotate(5deg);z-index:4">
       <img src="images/hoy_4.jpg" alt="">
     </div>
   </div>
@@ -504,7 +521,6 @@
 </div>
 
 <script>
-  // Observe chapter headers and dividers
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -513,22 +529,20 @@
 
   document.querySelectorAll('.chapter-header, .closing blockquote, .divider').forEach(el => observer.observe(el));
 
-  // Stagger photo reveal per collage
+  // Stagger photo reveal
   const collageObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const photos = entry.target.querySelectorAll('.photo');
         photos.forEach((photo, i) => {
-          setTimeout(() => {
-            photo.classList.add('visible');
-          }, i * 150);
+          setTimeout(() => photo.classList.add('visible'), i * 120);
         });
         collageObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.08 });
+  }, { threshold: 0.05 });
 
-  document.querySelectorAll('.collage').forEach(c => collageObserver.observe(c));
+  document.querySelectorAll('.collage-wrap').forEach(c => collageObserver.observe(c));
 
   // Lightbox
   const lightbox = document.getElementById('lightbox');
